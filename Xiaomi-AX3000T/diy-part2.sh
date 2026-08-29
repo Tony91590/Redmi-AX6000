@@ -9,8 +9,8 @@
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
-# Custom build script - Xiaomi AX3000T
-# Optimized LuCI + ImmortalWrt enhancements fw_setenv glbtn_key mesh
+# Custom build script - Redmi AX6000 
+# Optimized LuCI + ImmortalWrt enhancements
 
 set -e
 
