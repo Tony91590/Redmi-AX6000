@@ -1,0 +1,16 @@
+--- /dev/null
++++ b/.vermagic
+@@ -0,0 +1 @@
++5a6c1f71be683ae9980b15d3ce73e24d
+===================================================================
+--- a/include/kernel-defaults.mk
++++ b/include/kernel-defaults.mk
+@@ -126,7 +126,7 @@
+ 		cp $(LINUX_DIR)/.config.set $(LINUX_DIR)/.config.prev; \
+ 	}
+ 	$(_SINGLE) [ -d $(LINUX_DIR)/user_headers ] || $(KERNEL_MAKE) $(if $(findstring uml,$(BOARD)),ARCH=$(ARCH)) INSTALL_HDR_PATH=$(LINUX_DIR)/user_headers headers_install
+-	grep '=[ym]' $(LINUX_DIR)/.config.set | LC_ALL=C sort | $(MKHASH) md5 > $(LINUX_DIR)/.vermagic
++	cp -f $(TOPDIR)/.vermagic $(LINUX_DIR)/.vermagic
+ endef
+
+ define Kernel/Configure/Initramfs

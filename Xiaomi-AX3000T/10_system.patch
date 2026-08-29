@@ -1,0 +1,60 @@
+diff --git a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+--- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
++++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+@@ -20,10 +20,15 @@
+ 	method: 'board'
+ });
+
+-var callSystemInfo = rpc.declare({
+-	object: 'system',
+-	method: 'info'
+-});
++var callSystemInfo = rpc.declare({
++	object: 'system',
++	method: 'info'
++});
++
++var callTempInfo = rpc.declare({
++	object: 'luci',
++	method: 'getTempInfo'
++});
+
+ return baseclass.extend({
+ 	title: _('System'),
+@@ -32,6 +37,7 @@
+ 		return Promise.all([
+ 			L.resolveDefault(callSystemBoard(), {}),
+ 			L.resolveDefault(callSystemInfo(), {}),
++			L.resolveDefault(callTempInfo(), {}),
+ 			L.resolveDefault(callLuciVersion(), { revision: _('unknown version'), branch: 'LuCI' }),
+ 			L.resolveDefault(callGetUnixtime(), 0),
+ 			uci.load('system')
+@@ -41,8 +47,9 @@
+ 	render: function(data) {
+ 		var boardinfo   = data[0],
+ 		    systeminfo  = data[1],
+-		    luciversion = data[2],
+-		    unixtime    = data[3];
++		    tempinfo    = data[2],
++		    luciversion = data[3],
++		    unixtime    = data[4];
+
+ 		luciversion = luciversion.branch + ' ' + luciversion.revision;
+
+@@ -76,9 +83,14 @@
+ 				systeminfo.load[1] / 65535.0,
+ 				systeminfo.load[2] / 65535.0
+ 			) : null
+-		];
++		];
++
++		if (tempinfo.tempinfo) {
++			fields.splice(6, 0, _('Temperature'));
++			fields.splice(7, 0, tempinfo.tempinfo);
++		}
+
+-		var table = E('table', { 'class': 'table' });
++		var table = E('table', { 'class': 'table' });
+
+ 		for (var i = 0; i < fields.length; i += 2) {
+ 			table.appendChild(E('tr', { 'class': 'tr' }, [
