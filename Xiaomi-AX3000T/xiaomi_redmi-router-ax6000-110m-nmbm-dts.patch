@@ -73,9 +73,9 @@
  		wan_mac=$(mtd_get_mac_ascii Bdata ethaddr_wan)
 --- a/target/linux/mediatek/image/filogic.mk
 +++ b/target/linux/mediatek/image/filogic.mk
-@@ -3317,6 +3317,23 @@
+@@ -3441,6 +3441,23 @@ endif
  endef
- TARGET_DEVICES += xiaomi_mi-router-ax3000t-ubootmod
+ TARGET_DEVICES += xiaomi_mi-router-wr30u-ubootmod
  
 +define Device/xiaomi_redmi-router-ax6000-110m-nmbm
 +  DEVICE_VENDOR := Xiaomi
@@ -87,16 +87,16 @@
 +  PAGESIZE := 2048
 +  DEVICE_PACKAGES := kmod-leds-ws2812b kmod-mt7915e kmod-mt7986-firmware mt7986-wo-firmware
 +ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
-+  ARTIFACTS := initramfs-factory.ubi
++  ARTIFACT := initramfs-factory.ubi
 +  ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-kernel.bin | ubinize-kernel
 +endif
 +  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 +endef
 +TARGET_DEVICES += xiaomi_redmi-router-ax6000-110m-nmbm
 +
- define Device/xiaomi_mi-router-wr30u-stock
+ define Device/xiaomi_redmi-router-ax6000-stock
    DEVICE_VENDOR := Xiaomi
-   DEVICE_MODEL := Mi Router WR30U (stock layout)
+   DEVICE_MODEL := Redmi Router AX6000 (stock layout)
 --- a/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
 +++ b/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
 @@ -163,6 +163,7 @@ ubnt,unifi-6-plus)
