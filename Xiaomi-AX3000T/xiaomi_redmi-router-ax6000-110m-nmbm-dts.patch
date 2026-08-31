@@ -49,7 +49,7 @@
  	xiaomi,mi-router-ax3000t-ubootmod|\
  	xiaomi,mi-router-wr30u-stock|\
  	xiaomi,mi-router-wr30u-ubootmod|\
-+	xiaom,redmi-router-ax6000-110m-nmbm|
++	xiaom,redmi-router-ax6000-110m-nmbm|\
  	xiaomi,redmi-router-ax6000-stock|\
  	xiaomi,redmi-router-ax6000-ubootmod)
  		ip link set eth0 up
