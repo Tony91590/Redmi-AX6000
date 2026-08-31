@@ -73,7 +73,7 @@
  		wan_mac=$(mtd_get_mac_ascii Bdata ethaddr_wan)
 --- a/target/linux/mediatek/image/filogic.mk
 +++ b/target/linux/mediatek/image/filogic.mk
-@@ -3441,6 +3441,23 @@ endif
+@@ -3366,6 +3366,23 @@ endif
  endef
  TARGET_DEVICES += xiaomi_mi-router-wr30u-ubootmod
  
