@@ -1,1 +1,12 @@
-
+--- a/package/kernel/leds-ws2812b/src/leds-ws2812b.c
++++ b/package/kernel/leds-ws2812b/src/leds-ws2812b.c
+@@ -168,7 +168,8 @@ static int ws2812b_probe(struct spi_device *spi)
+ 
+ 		for (i = 0; i < WS2812B_NUM_COLORS; i++) {
+ 			priv->leds[cur_led].subled[i].color_index = color_idx[i];
+-			priv->leds[cur_led].subled[i].intensity = 255;
++			priv->leds[cur_led].subled[i].intensity =
++				(color_idx[i] == LED_COLOR_ID_GREEN) ? 255 : 0;
+ 		}
+ 
+ 		priv->leds[cur_led].cascade = cascade;
