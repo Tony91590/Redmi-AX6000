@@ -12,3 +12,5 @@ cp $GITHUB_WORKSPACE/Xiaomi-AX3000T/patch/7661-022-fix-rrm-snprintf-error.patch 
 sed -i '/\["FR"\]/s/{ 1, 2 }/{ 1, 1 }/' package/mtk/applications/mtwifi-cfg/files/mtwifi-cfg/mtwifi_defs.lua
 sed -i 's/default-settings-chn/default-settings/g' include/target.mk
 grep -R '\["FR"\]' package/mtk/applications/mtwifi-cfg/files/mtwifi-cfg/mtwifi_defs.lua
+PATCH_FILE="$GITHUB_WORKSPACE/Xiaomi-AX3000T/diff.patch"
+patch -p1 < "$PATCH_FILE"
