@@ -170,6 +170,7 @@ PATCH_FILE="$GITHUB_WORKSPACE/Xiaomi-AX3000T/diff.patch"
 patch -p1 < "$PATCH_FILE"
 
 rm -f feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js.orig
+rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
 
 mkdir -p target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface
 
