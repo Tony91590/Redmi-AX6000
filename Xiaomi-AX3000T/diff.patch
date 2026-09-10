@@ -20,3 +20,107 @@ index 0543f55845d..2b3b861cebd 100644
  		};
  	};
  };
+From a25f57959a38f7073374e79b3e0b62eb562cdad4 Mon Sep 17 00:00:00 2001
+From: Tony91590 <91764010+Tony91590@users.noreply.github.com>
+Date: Thu, 10 Sep 2026 19:32:57 +0300
+Subject: [PATCH] Update mt7986a-xiaomi-redmi-router-ax6000.dts
+
+---
+ .../mt7986a-xiaomi-redmi-router-ax6000.dts    | 84 ++++++++-----------
+ 1 file changed, 34 insertions(+), 50 deletions(-)
+
+diff --git a/target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7986a-xiaomi-redmi-router-ax6000.dts b/target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7986a-xiaomi-redmi-router-ax6000.dts
+index dbfe2c2a482..bd06d23affd 100644
+--- a/target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7986a-xiaomi-redmi-router-ax6000.dts
++++ b/target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7986a-xiaomi-redmi-router-ax6000.dts
+@@ -3,59 +3,40 @@
+ /dts-v1/;
+ #include "mt7986a-xiaomi-redmi-router-ax6000.dtsi"
+ 
+-/ {
+-	nmbm_spim_nand {
+-		compatible = "generic,nmbm";
++&spi_nand {
++	partitions {
++		compatible = "fixed-partitions";
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+ 
+-		lower-mtd-device = <&spi_nand>;
+-		forced-create;
+-
+-		partitions {
+-			compatible = "fixed-partitions";
+-			#address-cells = <0x01>;
+-			#size-cells = <0x01>;
+-
+-			partition@0 {
+-				label = "BL2";
+-				reg = <0x00 0x100000>;
+-			};
+-
+-			partition@100000 {
+-				label = "Nvram";
+-				reg = <0x100000 0x40000>;
+-			};
+-
+-			partition@140000 {
+-				label = "Bdata";
+-				reg = <0x140000 0x40000>;
+-			};
+-
+-			partition@180000 {
+-				label = "Factory";
+-				reg = <0x180000 0x200000>;
+-			};
+-
+-			partition@380000 {
+-				label = "FIP";
+-				reg = <0x380000 0x200000>;
+-			};
+-
+-			partition@580000 {
+-				label = "crash";
+-				reg = <0x580000 0x40000>;
+-			};
+-
+-			partition@5c0000 {
+-				label = "crash_log";
+-				reg = <0x5c0000 0x40000>;
+-			};
+-
+-			partition@600000 {
+-				label = "ubi";
+-				reg = <0x600000 0x6e00000>;
+-			};
++		partition@0 {
++			label = "BL2";
++			reg = <0x000000 0x100000>;
++		};
++
++		partition@100000 {
++			label = "Nvram";
++			reg = <0x100000 0x40000>;
++		};
++
++		partition@140000 {
++			label = "Bdata";
++			reg = <0x140000 0x40000>;
++		};
++
++		partition@180000 {
++			label = "Factory";
++			reg = <0x180000 0x200000>;
++		};
++
++		partition@380000 {
++			label = "FIP";
++			reg = <0x380000 0x200000>;
++		};
++
++		partition@580000 {
++			label = "ubi";
++			reg = <0x580000 0x7a80000>;
+ 		};
+ 	};
+ };
