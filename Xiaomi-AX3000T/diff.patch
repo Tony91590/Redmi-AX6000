@@ -1,3 +1,31 @@
+From 7d7c9f3656e5504a683554460f2b438f42550df9 Mon Sep 17 00:00:00 2001
+From: Tony91590 <91764010+Tony91590@users.noreply.github.com>
+Date: Thu, 10 Sep 2026 21:52:25 +0300
+Subject: [PATCH] Add UBI default config for redmi-router-ax6000
+
+---
+ package/boot/uboot-envtools/files/mediatek | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/package/boot/uboot-envtools/files/mediatek b/package/boot/uboot-envtools/files/mediatek
+index bcd710aae70..884794c4bb8 100644
+--- a/package/boot/uboot-envtools/files/mediatek
++++ b/package/boot/uboot-envtools/files/mediatek
+@@ -39,10 +39,12 @@ cmcc,rax3000m)
+ 	ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x80000" "0x80000" "1"
+ 	;;
+ xiaomi,mi-router-ax3000t* |\
+-xiaomi,mi-router-wr30u* |\
+-xiaomi,redmi-router-ax6000*)
++xiaomi,mi-router-wr30u*)
+ 	ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x10000" "0x20000" "1"
+ 	;;
++xiaomi,redmi-router-ax6000*)
++	ubootenv_add_ubi_default
++	;;
+ nradio,wt9103 |\
+ *konka,komi-a31*)
+ 	ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x20000" "0x80000" "1"
 From 295dc4f24449b80de1020d7d0565bb536d770113 Mon Sep 17 00:00:00 2001
 From: Tony91590 <91764010+Tony91590@users.noreply.github.com>
 Date: Thu, 10 Sep 2026 21:48:05 +0300
