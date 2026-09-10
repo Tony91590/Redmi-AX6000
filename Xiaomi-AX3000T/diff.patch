@@ -1,3 +1,33 @@
+From 295dc4f24449b80de1020d7d0565bb536d770113 Mon Sep 17 00:00:00 2001
+From: Tony91590 <91764010+Tony91590@users.noreply.github.com>
+Date: Thu, 10 Sep 2026 21:48:05 +0300
+Subject: [PATCH] Update mt7986.mk
+
+---
+ target/linux/mediatek/image/mt7986.mk | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/target/linux/mediatek/image/mt7986.mk b/target/linux/mediatek/image/mt7986.mk
+index 6c37da0d999..cb088a96288 100644
+--- a/target/linux/mediatek/image/mt7986.mk
++++ b/target/linux/mediatek/image/mt7986.mk
+@@ -371,11 +371,15 @@ define Device/xiaomi_redmi-router-ax6000
+   DEVICE_DTS_DIR := $(DTS_DIR)/mediatek
+   DEVICE_PACKAGES := kmod-leds-ws2812b
+   SUPPORTED_DEVICES := xiaomi,redmi-router-ax6000
++
+   UBINIZE_OPTS := -E 5
+   BLOCKSIZE := 128k
+   PAGESIZE := 2048
+-  IMAGE_SIZE := 112640k
++  IMAGE_SIZE := 125440k
++
+   KERNEL_IN_UBI := 1
++  UBOOTENV_IN_UBI := 1
++
+   IMAGES += factory.bin
+   IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 From 435224eccb2e8b67ab57ed48fac496f2caf740d4 Mon Sep 17 00:00:00 2001
 From: Tony91590 <91764010+Tony91590@users.noreply.github.com>
 Date: Sun, 6 Sep 2026 14:54:08 +0200
