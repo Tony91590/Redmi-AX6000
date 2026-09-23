@@ -179,6 +179,22 @@ rm -f target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface.orig
 rm -f target/linux/mediatek/filogic/base-files/etc/board.d/02_network.orig
 rm -f target/linux/mediatek/image/filogic.mk.orig
 rm -f package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic.orig
+rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
 rm -f target/linux/mediatek/filogic/base-files/etc/board.d/01_leds.orig
+
+mkdir -p target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface
+
+cat > target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload <<'ODHCPD_EOF'
+#!/bin/sh
+
+[ "$ACTION" = "ifup" ] || exit 0
+
+if [ "$INTERFACE" = "wan6" ]; then
+        sleep 10
+        /etc/init.d/odhcpd reload
+fi
+ODHCPD_EOF
+
+chmod 0755 target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload
 
 echo "Done ✔"
