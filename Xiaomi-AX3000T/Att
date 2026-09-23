@@ -1,3 +1,24 @@
+nvram set boot_wait=on
+nvram set uart_en=1
+nvram set flag_boot_rootfs=0
+nvram set flag_last_success=0
+nvram set flag_boot_success=1
+nvram set flag_try_sys1_failed=0
+nvram set flag_try_sys2_failed=0
+nvram commit
+
+
+
+fw_setenv boot_wait on
+fw_setenv uart_en 1
+fw_setenv flag_boot_rootfs 0
+fw_setenv flag_last_success 1
+fw_setenv flag_boot_success 1
+fw_setenv flag_try_sys1_failed 8
+fw_setenv flag_try_sys2_failed 8
+fw_setenv mtdparts "nmbm0:1024k(bl2),256k(Nvram),256k(Bdata),2048k(factory),2048k(fip),256k(crash),256k(crash_log),112640k(ubi)"
+
+
 define Device/xiaomi_redmi-router-ax6000-110m-nmbm
   DEVICE_VENDOR := Xiaomi
   DEVICE_MODEL := Redmi Router AX6000 (110M UBI with NMBM-Enabled layout)
