@@ -190,7 +190,7 @@ cat > target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-rel
 [ "$ACTION" = "ifup" ] || exit 0
 
 if [ "$INTERFACE" = "wan6" ]; then
-        sleep 10
+        sleep 20
         /etc/init.d/odhcpd reload
 fi
 ODHCPD_EOF
