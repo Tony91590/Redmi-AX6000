@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dts
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,287 @@
 +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
 +
 +/dts-v1/;
