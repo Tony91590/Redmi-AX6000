@@ -10,17 +10,14 @@
  	ubootenv_add_uci_sys_config "/dev/mtd2" "0x0" "0x10000" "0x20000"
 --- a/target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface
 +++ b/target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface
-@@ -37,6 +37,7 @@ set_preinit_iface() {
+@@ -34,6 +34,7 @@ set_preinit_iface() {
+ 	xiaomi,mi-router-wr30u-stock|\
  	xiaomi,mi-router-wr30u-ubootmod|\
- 	xiaomi,mi-router-wr30u-mtkuboot|\
  	xiaomi,redmi-router-ax6000-stock|\
 +	xiaomi,redmi-router-ax6000-mtkuboot|\
  	xiaomi,redmi-router-ax6000-ubootmod)
  		ip link set eth0 up
  		ifname=lan4
-diff --git a/target/linux/mediatek/dts-ext/mt7986a-xiaomi-redmi-router-ax6000-mtkuboot.dts b/target/linux/mediatek/dts-ext/mt7986a-xiaomi-redmi-router-ax6000-mtkuboot.dts
-new file mode 100644
-index 00000000000..c3d975ff446
 --- /dev/null
 +++ b/target/linux/mediatek/dts-ext/mt7986a-xiaomi-redmi-router-ax6000-mtkuboot.dts
 @@ -0,0 +1,34 @@
