@@ -57,18 +57,14 @@
 +};
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
-
-afaire
-@@ -355,6 +355,7 @@ xiaomi,mi-router-wr30u-ubootmod)
+@@ -350,6 +350,7 @@ xiaomi,mi-router-wr30u-ubootmod)
  	ucidef_set_led_netdev "wan" "wan" "blue:wan" "wan" "link tx rx"
  	;;
  xiaomi,redmi-router-ax6000-stock|\
 +xiaomi,redmi-router-ax6000-mtkuboot|\
  xiaomi,redmi-router-ax6000-ubootmod)
- 	ucidef_set_led_netdev "wan" "wan" "rgb:network" "wan" "link"
+ 	ucidef_set_led_netdev "wan" "wan" "rgb:network" "wan"
  	;;
-diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-index 72eebefee0d..89f187781fd 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 @@ -232,6 +232,7 @@ mediatek_setup_interfaces()
