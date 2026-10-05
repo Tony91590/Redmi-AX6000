@@ -156,10 +156,7 @@ uci set wireless.@wifi-iface[1].ssid="OpenWrt_5G"
 
 uci commit wireless
 
-#uci set firewall.@defaults[0].flow_offloading='1'
-#uci set firewall.@defaults[0].flow_offloading_hw='1'
-
-#uci commit firewall
+sed -i "s|/tmp/odhcpd-piodir|''|g" /etc/uci-defaults/15_odhcpd
 
 uci set dhcp.odhcpd.piodir=''
 uci commit dhcp
