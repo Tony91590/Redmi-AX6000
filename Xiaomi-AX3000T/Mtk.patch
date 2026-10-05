@@ -94,13 +94,9 @@ index 72eebefee0d..89f187781fd 100644
  		label_mac=$wan_mac
 diff --git a/target/linux/mediatek/image/filogic-ext.mk b/target/linux/mediatek/image/filogic-ext.mk
 index d1879cda2d3..b1d24743e6c 100644
---- a/target/linux/mediatek/image/filogic-ext.mk
+--- /dev/null
 +++ b/target/linux/mediatek/image/filogic-ext.mk
-@@ -150,3 +150,20 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
- endif
- endef
- TARGET_DEVICES += wirelesstag_zx7981pd-ubootmod
-+
+@@ -0,0 +1,16 @@
 +define Device/xiaomi_redmi-router-ax6000-mtkuboot
 +  DEVICE_VENDOR := Xiaomi
 +  DEVICE_MODEL := Redmi Router AX6000
@@ -117,4 +113,3 @@ index d1879cda2d3..b1d24743e6c 100644
 +  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 +endef
 +TARGET_DEVICES += xiaomi_redmi-router-ax6000-mtkuboot
-\ No newline at end of file
