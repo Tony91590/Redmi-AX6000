@@ -181,5 +181,5 @@ rm -f target/linux/mediatek/filogic/base-files/etc/board.d/02_network.orig
 rm -f package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic.orig
 rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
 rm -f target/linux/mediatek/filogic/base-files/etc/board.d/01_leds.orig
-
+sed -i 's/192.168.1.1/192.168.6.1/g' package/base-files/files/bin/config_generate
 echo "Done ✔"
