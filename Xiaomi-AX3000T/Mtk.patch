@@ -96,13 +96,14 @@ diff --git a/target/linux/mediatek/image/filogic-ext.mk b/target/linux/mediatek/
 index d1879cda2d3..b1d24743e6c 100644
 --- /dev/null
 +++ b/target/linux/mediatek/image/filogic-ext.mk
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,17 @@
 +define Device/xiaomi_redmi-router-ax6000-mtkuboot
 +  DEVICE_VENDOR := Xiaomi
 +  DEVICE_MODEL := Redmi Router AX6000
 +  DEVICE_VARIANT := (MTK U-Boot layout)
 +  DEVICE_DTS := mt7986a-xiaomi-redmi-router-ax6000-mtkuboot
 +  DEVICE_DTS_DIR := ../dts-ext
++  DEVICE_PACKAGES := kmod-leds-ws2812b kmod-mt7915e kmod-mt7986-firmware mt7986-wo-firmware
 +  UBINIZE_OPTS := -E 5
 +  BLOCKSIZE := 128k
 +  PAGESIZE := 2048
