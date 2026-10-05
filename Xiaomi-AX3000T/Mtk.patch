@@ -55,8 +55,6 @@
 +		reg = <0x600000 0x6e00000>;
 +	};
 +};
-diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds b/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
-index d45ca64b917..0baa4a0e3e7 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
 @@ -355,6 +355,7 @@ xiaomi,mi-router-wr30u-ubootmod)
