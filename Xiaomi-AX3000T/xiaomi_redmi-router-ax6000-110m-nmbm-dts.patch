@@ -1,3 +1,13 @@
+--- a/target/linux/mediatek/image/Makefile
++++ b/target/linux/mediatek/image/Makefile
+@@ -39,6 +39,7 @@ define Build/asus-trx
+ endef
+ 
+ include $(SUBTARGET).mk
++include filogic-ext.mk
+ 
+ define Image/Build
+ 	$(call Image/Build/$(1),$(1))
 --- a/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
 +++ b/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
 @@ -170,6 +170,7 @@ ubnt,unifi-6-plus)
