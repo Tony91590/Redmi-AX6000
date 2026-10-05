@@ -127,7 +127,7 @@ EOF
 
 echo "[4] Kernel tweak (mt76 / AX3000T)..."
 
-sed -i '/AUTOLOAD:=$(call AutoProbe,mt7915e)/a \  MODPARAMS.mt7915e:=wed_enable=Y' package/kernel/mt76/Makefile
+#sed -i '/AUTOLOAD:=$(call AutoProbe,mt7915e)/a \  MODPARAMS.mt7915e:=wed_enable=Y' package/kernel/mt76/Makefile
 
 echo "[5] LuCI theme Argon..."
 
@@ -156,10 +156,14 @@ uci set wireless.@wifi-iface[1].ssid="OpenWrt_5G"
 
 uci commit wireless
 
-uci set firewall.@defaults[0].flow_offloading='1'
-uci set firewall.@defaults[0].flow_offloading_hw='1'
+#uci set firewall.@defaults[0].flow_offloading='1'
+#uci set firewall.@defaults[0].flow_offloading_hw='1'
 
-uci commit firewall
+#uci commit firewall
+
+uci set dhcp.odhcpd.piodir=''
+uci commit dhcp
+/etc/init.d/odhcpd restart
 
 exit 0
 EOF
