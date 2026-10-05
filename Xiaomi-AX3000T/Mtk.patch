@@ -67,24 +67,22 @@
  	;;
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-@@ -232,6 +232,7 @@ mediatek_setup_interfaces()
+@@ -227,6 +227,7 @@ mediatek_setup_interfaces()
+ 	xiaomi,mi-router-wr30u-stock|\
  	xiaomi,mi-router-wr30u-ubootmod|\
- 	xiaomi,mi-router-wr30u-mtkuboot|\
  	xiaomi,redmi-router-ax6000-stock|\
 +	xiaomi,redmi-router-ax6000-mtkuboot|\
  	xiaomi,redmi-router-ax6000-ubootmod)
  		ucidef_set_interfaces_lan_wan "lan2 lan3 lan4" wan
  		;;
-@@ -333,6 +334,7 @@ mediatek_setup_macs()
+@@ -356,6 +357,7 @@ mediatek_setup_macs()
+ 	xiaomi,mi-router-wr30u-stock|\
  	xiaomi,mi-router-wr30u-ubootmod|\
- 	xiaomi,mi-router-wr30u-mtkuboot|\
  	xiaomi,redmi-router-ax6000-stock|\
 +	xiaomi,redmi-router-ax6000-mtkuboot|\
  	xiaomi,redmi-router-ax6000-ubootmod)
  		wan_mac=$(mtd_get_mac_ascii Bdata ethaddr_wan)
  		label_mac=$wan_mac
-diff --git a/target/linux/mediatek/image/filogic-ext.mk b/target/linux/mediatek/image/filogic-ext.mk
-index d1879cda2d3..b1d24743e6c 100644
 --- /dev/null
 +++ b/target/linux/mediatek/image/filogic-ext.mk
 @@ -0,0 +1,17 @@
