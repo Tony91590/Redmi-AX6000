@@ -161,6 +161,10 @@ uci set firewall.@defaults[0].flow_offloading_hw='1'
 
 uci commit firewall
 
+uci set dhcp.odhcpd.piodir=''
+uci commit dhcp
+/etc/init.d/odhcpd restart
+
 exit 0
 EOF
 
