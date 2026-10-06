@@ -11,18 +11,24 @@
 +	compatible = "xiaomi,redmi-router-ax6000", "mediatek,mt7986a";
 +};
 +
-+&spi_nand_flash {
-+	mediatek,nmbm;
-+	mediatek,bmt-max-ratio = <1>;
-+	mediatek,bmt-max-reserved-blocks = <64>;
-+};
-+
 +&partitions {
 +	partition@580000 {
 +		label = "crash";
 +		reg = <0x580000 0x40000>;
 +		read-only;
 +	};
+
+
+};
+
+&partitions {
+	partition@580000 {
+		label = "ubi";
+		reg = <0x580000 0x7a80000>;
+	};
+};
+
+
 +
 +	partition@5c0000 {
 +		label = "crash_log";
@@ -40,8 +46,6 @@
 +		label = "ubi";
 +		reg = <0x600000 0x6e00000>;
 +	};
-+
-+	/* last 12 MiB is reserved for NMBM bad block table */
 +};
 --- a/target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface
 +++ b/target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface
