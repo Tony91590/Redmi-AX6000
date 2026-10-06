@@ -156,11 +156,6 @@ uci set wireless.@wifi-iface[1].ssid="OpenWrt_5G"
 
 uci commit wireless
 
-uci set firewall.@defaults[0].flow_offloading='1'
-uci set firewall.@defaults[0].flow_offloading_hw='1'
-
-uci commit firewall
-
 exit 0
 EOF
 
