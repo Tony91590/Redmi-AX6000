@@ -127,7 +127,7 @@ EOF
 
 echo "[4] Kernel tweak (mt76 / AX3000T)..."
 
-sed -i '/AUTOLOAD:=$(call AutoProbe,mt7915e)/a \  MODPARAMS.mt7915e:=wed_enable=Y' package/kernel/mt76/Makefile
+#sed -i '/AUTOLOAD:=$(call AutoProbe,mt7915e)/a \  MODPARAMS.mt7915e:=wed_enable=Y' package/kernel/mt76/Makefile
 
 echo "[5] LuCI theme Argon..."
 
