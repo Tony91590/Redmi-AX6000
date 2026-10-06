@@ -156,6 +156,10 @@ uci set wireless.@wifi-iface[1].ssid="OpenWrt_5G"
 
 uci commit wireless
 
+uci set dhcp.odhcpd.piodir=' '
+uci commit dhcp
+/etc/init.d/odhcpd restart
+
 exit 0
 EOF
 
