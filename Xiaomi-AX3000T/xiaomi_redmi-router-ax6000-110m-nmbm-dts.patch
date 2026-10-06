@@ -38,13 +38,15 @@
 +
 +	/* ubi partition is the result of squashing
 +	 * consecutive stock partitions:
++	 * - ubi1
++	 * - ubi1
 +	 * - ubi
 +	 * - ubi1
 +	 * - overlay
 +	 */
-+	partition@600000 {
++	partition@580000 {
 +		label = "ubi";
-+		reg = <0x600000 0x6e00000>;
++		reg = <0x580000 0x7a80000>;
 +	};
 +};
 --- a/target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface
