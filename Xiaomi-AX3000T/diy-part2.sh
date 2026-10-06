@@ -156,15 +156,6 @@ uci set wireless.@wifi-iface[1].ssid="OpenWrt_5G"
 
 uci commit wireless
 
-#uci set firewall.@defaults[0].flow_offloading='1'
-#uci set firewall.@defaults[0].flow_offloading_hw='1'
-
-#uci commit firewall
-
-uci set dhcp.odhcpd.piodir=''
-uci commit dhcp
-/etc/init.d/odhcpd restart
-
 exit 0
 EOF
 
@@ -175,20 +166,5 @@ patch -p1 < "$PATCH_FILE"
 
 rm -f feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js.orig
 rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
-
-mkdir -p target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface
-
-cat > target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload <<'ODHCPD_EOF'
-#!/bin/sh
-
-[ "$ACTION" = "ifup" ] || exit 0
-
-if [ "$INTERFACE" = "wan6" ]; then
-        sleep 10
-        /etc/init.d/odhcpd reload
-fi
-ODHCPD_EOF
-
-chmod 0755 target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload
 
 echo "Done ✔"
