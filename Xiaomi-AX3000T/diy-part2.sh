@@ -169,17 +169,75 @@ rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
 
 mkdir -p target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface
 
-cat > target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload <<'ODHCPD_EOF'
+cat > target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/95-wan6-pd-recovery <<'ODHCPD_EOF'
 #!/bin/sh
 
+TAG="wan6-pd-recovery"
+
+log() {
+	logger -t "$TAG" "$1"
+}
+
+# Seulement wan6
+[ "$INTERFACE" = "wan6" ] || exit 0
+
+# Seulement au démarrage de l'interface
 [ "$ACTION" = "ifup" ] || exit 0
 
-if [ "$INTERFACE" = "wan6" ]; then
-        sleep 10
-        /etc/init.d/odhcpd reload
+log "wan6 started"
+
+# Laisser odhcp6c/netifd commencer son travail
+sleep 3
+
+get_pd() {
+	ubus call network.interface.wan6 status 2>/dev/null |
+		jsonfilter -e '@["ipv6-prefix"][0].address' 2>/dev/null
+}
+
+# Vérification initiale
+PD="$(get_pd)"
+
+if [ -n "$PD" ]; then
+	log "IPv6-PD found: $PD"
+	/etc/init.d/odhcpd reload
+	log "odhcpd reloaded"
+	exit 0
 fi
+
+# Aucun PD : forcer une nouvelle négociation DHCPv6
+log "No IPv6-PD found, restarting wan6"
+
+ifdown wan6
+sleep 2
+ifup wan6
+
+# Attendre le PD pendant 30 secondes
+i=0
+
+while [ "$i" -lt 30 ]; do
+	sleep 1
+
+	PD="$(get_pd)"
+
+	if [ -n "$PD" ]; then
+		log "IPv6-PD acquired: $PD"
+
+		# Laisser netifd appliquer le préfixe
+		sleep 2
+
+		/etc/init.d/odhcpd reload
+
+		log "odhcpd reloaded after PD acquisition"
+		exit 0
+	fi
+
+	i=$((i + 1))
+done
+
+log "IPv6-PD not acquired after 30 seconds"
+exit 1
 ODHCPD_EOF
 
-chmod 0755 target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload
+chmod 0755 target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/95-wan6-pd-recovery
 
 echo "Done ✔"
