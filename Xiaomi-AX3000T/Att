@@ -1,3 +1,27 @@
+
+# U-Boot : initramfs uniquement
+ROOTFS_TYPE="$(ubus call system board 2>/dev/null |
+    jsonfilter -e '@.rootfs_type' 2>/dev/null)"
+
+if [ "$ROOTFS_TYPE" = "initramfs" ]; then
+    logger -t initramfs-uboot "Initramfs detecte, configuration U-Boot"
+
+    fw_setenv boot_wait on &&
+    fw_setenv uart_en 1 &&
+    fw_setenv flag_boot_rootfs 0 &&
+    fw_setenv flag_last_success 1 &&
+    fw_setenv flag_boot_success 1 &&
+    fw_setenv flag_try_sys1_failed 8 &&
+    fw_setenv flag_try_sys2_failed 8 &&
+    fw_setenv mtdparts "nmbm0:1024k(bl2),256k(Nvram),256k(Bdata),2048k(factory),2048k(fip),256k(crash),256k(crash_log),112640k(ubi)" ||
+        logger -t initramfs-uboot "ERREUR fw_setenv"
+else
+    logger -t initramfs-uboot "Pas en initramfs ($ROOTFS_TYPE), aucune modification U-Boot"
+fi
+
+ubus call system board | jsonfilter -e '@.rootfs_type'
+
+
 sed -i '$a\
 https://Gta.fr/package.adb' /etc/apk/repositories.d/distfeeds.list
 
