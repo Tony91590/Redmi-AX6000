@@ -158,6 +158,31 @@ uci commit wireless
 
 echo 'https://downloads.openwrt.org/releases/25.12.5/targets/mediatek/filogic/kmods/6.12.94-1-5a6c1f71be683ae9980b15d3ce73e24d/packages.adb' >> /etc/apk/repositories.d/distfeeds.list
 
+rootfs_type() {
+    /bin/mount | awk '($3 ~ /^\/$/) && ($5 !~ /rootfs/) { print $5 }'
+}
+
+# Run only if the root filesystem is tmpfs
+ROOTFS_TYPE="$(rootfs_type)"
+
+if [ "$ROOTFS_TYPE" != "tmpfs" ]; then
+    logger -t initramfs-uboot "Skipping U-Boot configuration: root filesystem type is '$ROOTFS_TYPE'"
+    exit 0
+fi
+
+logger -t initramfs-uboot "tmpfs root detected, configuring U-Boot"
+
+fw_setenv boot_wait on
+fw_setenv uart_en 1
+fw_setenv flag_boot_rootfs 0
+fw_setenv flag_last_success 1
+fw_setenv flag_boot_success 1
+fw_setenv flag_try_sys1_failed 8
+fw_setenv flag_try_sys2_failed 8
+fw_setenv mtdparts "nmbm0:1024k(bl2),256k(Nvram),256k(Bdata),2048k(factory),2048k(fip),256k(crash),256k(crash_log),112640k(ubi)"
+
+logger -t initramfs-uboot "U-Boot environment configuration commands completed"
+
 exit 0
 EOF
 
