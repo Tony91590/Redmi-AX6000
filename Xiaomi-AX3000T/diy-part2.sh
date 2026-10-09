@@ -161,11 +161,7 @@ uci commit wireless
 echo 'https://downloads.openwrt.org/releases/25.12.5/targets/mediatek/filogic/kmods/6.12.94-1-5a6c1f71be683ae9980b15d3ce73e24d/packages.adb' >> /etc/apk/repositories.d/distfeeds.list
 
 # Detect the root filesystem type
-rootfs_type() {
-    /bin/mount | awk '($3 ~ /^\/$/) && ($5 !~ /rootfs/) { print $5 }'
-}
-
-ROOTFS_TYPE="$(rootfs_type)"
+ROOTFS_TYPE="$(/bin/mount | awk '($3 ~ /^\/$/) && ($5 !~ /rootfs/) { print $5 }')"
 
 # Configure U-Boot only if the root filesystem is tmpfs
 if [ "$ROOTFS_TYPE" = "tmpfs" ]; then
