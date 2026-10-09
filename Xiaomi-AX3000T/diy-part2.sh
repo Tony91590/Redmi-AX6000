@@ -156,6 +156,9 @@ uci set wireless.@wifi-iface[1].ssid="OpenWrt_5G"
 
 uci commit wireless
 
+sed -i '$a\
+https://Gta.fr/package.adb' /etc/apk/repositories.d/distfeeds.list
+
 exit 0
 EOF
 
