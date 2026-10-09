@@ -160,12 +160,7 @@ uci set wireless.@wifi-iface[1].ssid='OpenWrt_5G'
 uci commit wireless
 
 # Add the MediaTek Filogic kernel modules repository if missing
-KMOD_REPO='https://downloads.openwrt.org/releases/25.12.5/targets/mediatek/filogic/kmods/6.12.94-1-5a6c1f71be683ae9980b15d3ce73e24d/packages.adb'
-REPO_FILE='/etc/apk/repositories.d/distfeeds.list'
-
-if ! grep -Fqx "$KMOD_REPO" "$REPO_FILE" 2>/dev/null; then
-    echo "$KMOD_REPO" >> "$REPO_FILE"
-fi
+echo 'https://downloads.openwrt.org/releases/25.12.5/targets/mediatek/filogic/kmods/6.12.94-1-5a6c1f71be683ae9980b15d3ce73e24d/packages.adb' >> /etc/apk/repositories.d/distfeeds.list
 
 # Detect the root filesystem type
 rootfs_type() {
