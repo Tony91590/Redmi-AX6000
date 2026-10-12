@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dts
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,40 @@
 +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
 +
 +/dts-v1/;
@@ -38,10 +38,8 @@
 +	 */
 +	partition@600000 {
 +		label = "ubi";
-+		reg = <0x600000 0x6e00000>;
++		reg = <0x600000 0x7000000>;
 +	};
-+
-+	/* last 12 MiB is reserved for NMBM bad block table */
 +};
 --- a/target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface
 +++ b/target/linux/mediatek/base-files/lib/preinit/05_set_preinit_iface
