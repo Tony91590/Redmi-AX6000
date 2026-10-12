@@ -1,3 +1,41 @@
+
+#!/bin/sh
+
+VLAN_ID="100"
+
+NEW_REPLACEMENT=".$VLAN_ID"
+[ "$VLAN_ID" = "0" ] || [ -z "$VLAN_ID" ] && NEW_REPLACEMENT=""
+
+# /etc/config/network
+awk -v repl="$NEW_REPLACEMENT" '
+{
+    gsub(/config interface '\''eth1(\.[0-9]+)?'\''/, "config interface '\''eth1'\''")
+
+    if ($0 ~ /option ifname '\''[^'\'']*eth1(\.[0-9]+)?'\''/) {
+        sub(/eth1(\.[0-9]+)?'\''/, "eth1" repl "'\''")
+    }
+
+    print
+}' /etc/config/network > /tmp/network.new &&
+    cat /tmp/network.new > /etc/config/network &&
+    rm -f /tmp/network.new
+
+# /etc/config/port_map
+awk -v repl="$NEW_REPLACEMENT" '
+{
+    if ($0 ~ /option ifname '\''eth1(\.[0-9]+)?'\''/) {
+        sub(/eth1(\.[0-9]+)?'\''/, "eth1" repl "'\''")
+    }
+
+    print
+}' /etc/config/port_map > /tmp/port_map.new &&
+    cat /tmp/port_map.new > /etc/config/port_map &&
+    rm -f /tmp/port_map.new
+
+
+
+
+
 logread -e initramfs-uboot
 
 #!/bin/sh
