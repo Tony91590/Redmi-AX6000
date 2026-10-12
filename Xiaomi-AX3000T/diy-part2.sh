@@ -169,17 +169,96 @@ rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
 
 mkdir -p target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface
 
-cat > target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload <<'ODHCPD_EOF'
+cat > target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/95-wan6-pd-recovery <<'ODHCPD_EOF'
 #!/bin/sh
 
-[ "$ACTION" = "ifup" ] || exit 0
+TAG="wan6-pd-recovery"
+MAX_RETRIES=100
+SLEEP_INTERVAL=120
+NETWORK_RELOAD_AFTER=3
 
-if [ "$INTERFACE" = "wan6" ]; then
-        sleep 10
+log() {
+    logger -t "$TAG" "$1"
+}
+
+[ "$ACTION" = "ifup" ] && [ "$INTERFACE" = "wan" ] || exit 0
+
+(
+    LOCK="/var/lock/wan6-pd-recovery.lock"
+    mkdir "$LOCK" 2>/dev/null || exit 0
+    trap 'rmdir "$LOCK" 2>/dev/null' EXIT
+
+    log "Starting WAN6 PD recovery"
+
+    get_pd() {
+        ubus call network.interface.wan6 status 2>/dev/null |
+            jsonfilter -e '@["ipv6-prefix"][0].address' 2>/dev/null
+    }
+
+    reload_odhcpd() {
+        log "Reloading odhcpd"
         /etc/init.d/odhcpd reload
-fi
+    }
+
+    reload_network() {
+        log "PD missing: reloading network"
+        /etc/init.d/network reload
+        sleep 10
+    }
+
+    # Toujours recharger odhcpd au démarrage du script
+    PD="$(get_pd)"
+
+    if [ -n "$PD" ]; then
+        log "PD already present: $PD"
+        reload_odhcpd
+        exit 0
+    fi
+
+    reload_odhcpd
+    log "No PD detected at startup"
+
+    i=0
+
+    while [ "$i" -lt "$MAX_RETRIES" ]; do
+        i=$((i + 1))
+
+        if [ "$i" -eq "$NETWORK_RELOAD_AFTER" ]; then
+            reload_network
+            reload_odhcpd
+        fi
+
+        log "Restarting wan6 (attempt $i)"
+        ifdown wan6
+        sleep 2
+        ifup wan6
+
+        j=0
+        while [ "$j" -lt "$SLEEP_INTERVAL" ]; do
+            sleep 1
+            j=$((j + 1))
+
+            PD="$(get_pd)"
+
+            if [ -n "$PD" ]; then
+                log "IPv6-PD acquired: $PD"
+                sleep 2
+                reload_odhcpd
+                log "Recovery successful: $PD"
+                exit 0
+            fi
+        done
+
+        log "No PD after attempt $i"
+    done
+
+    log "Gave up after $MAX_RETRIES attempts"
+
+) &
+
+exit 0
 ODHCPD_EOF
 
-chmod 0755 target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/99-odhcpd-reload
+chmod 0755 target/linux/mediatek/filogic/base-files/etc/hotplug.d/iface/95-wan6-pd-recovery
 
 echo "Done ✔"
