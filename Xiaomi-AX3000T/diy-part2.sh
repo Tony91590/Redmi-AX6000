@@ -190,6 +190,10 @@ log() {
 
     log "Starting WAN6 PD recovery"
 
+    # Attendre 20 secondes pour laisser WAN6 initialiser le PD
+    log "Waiting 20 seconds for WAN6 PD initialization"
+    sleep 20
+
     get_pd() {
         ubus call network.interface.wan6 status 2>/dev/null |
             jsonfilter -e '@["ipv6-prefix"][0].address' 2>/dev/null
@@ -206,7 +210,7 @@ log() {
         sleep 10
     }
 
-    # Toujours recharger odhcpd au démarrage du script
+    # Vérifier le PD après les 20 secondes d'attente
     PD="$(get_pd)"
 
     if [ -n "$PD" ]; then
