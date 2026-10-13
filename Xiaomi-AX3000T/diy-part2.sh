@@ -176,6 +176,7 @@ TAG="wan6-pd-recovery"
 MAX_RETRIES=100
 SLEEP_INTERVAL=120
 NETWORK_RELOAD_AFTER=3
+PD_DETECTED_WAIT=20
 
 log() {
     logger -t "$TAG" "$1"
@@ -189,10 +190,6 @@ log() {
     trap 'rmdir "$LOCK" 2>/dev/null' EXIT
 
     log "Starting WAN6 PD recovery"
-
-    # Attendre 20 secondes pour laisser WAN6 initialiser le PD
-    log "Waiting 20 seconds for WAN6 PD initialization"
-    sleep 20
 
     get_pd() {
         ubus call network.interface.wan6 status 2>/dev/null |
@@ -210,18 +207,21 @@ log() {
         sleep 10
     }
 
-    # Vérifier le PD après les 20 secondes d'attente
+    # Detection du PD au demarrage
     PD="$(get_pd)"
 
     if [ -n "$PD" ]; then
         log "PD already present: $PD"
+        log "Waiting ${PD_DETECTED_WAIT}s before reloading odhcpd"
+        sleep "$PD_DETECTED_WAIT"
         reload_odhcpd
+        log "Recovery successful: $PD"
         exit 0
     fi
 
-    reload_odhcpd
     log "No PD detected at startup"
 
+    # Aucune relance d'odhcpd tant que le PD est absent
     i=0
 
     while [ "$i" -lt "$MAX_RETRIES" ]; do
@@ -229,7 +229,6 @@ log() {
 
         if [ "$i" -eq "$NETWORK_RELOAD_AFTER" ]; then
             reload_network
-            reload_odhcpd
         fi
 
         log "Restarting wan6 (attempt $i)"
@@ -246,7 +245,8 @@ log() {
 
             if [ -n "$PD" ]; then
                 log "IPv6-PD acquired: $PD"
-                sleep 2
+                log "Waiting ${PD_DETECTED_WAIT}s before reloading odhcpd"
+                sleep "$PD_DETECTED_WAIT"
                 reload_odhcpd
                 log "Recovery successful: $PD"
                 exit 0
