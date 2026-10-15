@@ -1,3 +1,14 @@
+--- a/package/base-files/files/bin/config_generate
++++ b/package/base-files/files/bin/config_generate
+@@ -331,7 +331,7 @@ generate_static_system() {
+ 		set system.@system[-1].hostname='ImmortalWrt'
+ 		set system.@system[-1].timezone='UTC'
+ 		set system.@system[-1].ttylogin='0'
+-		set system.@system[-1].log_size='128'
++		set system.@system[-1].log_size='512'
+ 		set system.@system[-1].urandom_seed='0'
+ 
+ 		delete system.ntp
 --- a/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000-ubootmod.dts
 +++ b/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000-ubootmod.dts
 @@ -8,28 +8,21 @@
