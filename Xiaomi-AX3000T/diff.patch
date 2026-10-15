@@ -1,3 +1,21 @@
+--- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
++++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
+@@ -72,7 +72,6 @@ platform_do_upgrade() {
+     tplink,tl-xdr6088|\
+ 	tplink,wma301|\
+ 	tplink,wma301-stock|\
+-	xiaomi,redmi-router-ax6000-ubootmod|\
+ 	xiaomi,mi-router-ax3000t-ubootmod|\
+     xiaomi,mi-router-wr30u-ubootmod|\
+ 	h3c,magic-nx30-pro|\
+@@ -113,6 +112,7 @@ platform_do_upgrade() {
+ 	tplink,tl-xtr8488|\
+ 	tplink,wma301-ubootmod|\
+ 	wirelesstag,zx7981pd-ubootmod|\
++	xiaomi,mi-router-wr30u-ubootmod|\
+ 	zyxel,ex5601-t0-ubootmod)
+ 		fit_do_upgrade "$1"
+ 		;;
 --- a/target/linux/mediatek/image/filogic.mk
 +++ b/target/linux/mediatek/image/filogic.mk
 @@ -2535,18 +2535,31 @@ TARGET_DEVICES += xiaomi_redmi-router-ax6000-stock
