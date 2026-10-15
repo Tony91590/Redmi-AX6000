@@ -17,3 +17,9 @@ rm -rf feeds/luci/themes/luci-theme-argon feeds/luci/themes/luci-app-argon-confi
 
 git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
+
+rm -f target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh.orig
+rm -f target/linux/mediatek/image/filogic.mk.orig
+rm -f package/base-files/files/bin/config_generate.orig
+rm -f target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000-ubootmod.dts.orig
+rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
