@@ -172,4 +172,9 @@ patch -p1 < "$PATCH_FILE"
 rm -f feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js.orig
 rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c.orig
 
+#git clone -b openwrt-25.12 https://github.com/immortalwrt/immortalwrt.git tmp_imm
+
+#cp -r tmp_imm/package/emortal package/
+#rm -rf tmp_imm
+
 echo "Done ✔"
