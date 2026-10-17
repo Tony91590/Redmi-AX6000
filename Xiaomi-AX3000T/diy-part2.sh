@@ -13,10 +13,10 @@ sed -i 's/default-settings-chn/default-settings/g' include/target.mk
 PATCH_FILE="$GITHUB_WORKSPACE/Xiaomi-AX3000T/diff.patch"
 patch -p1 < "$PATCH_FILE"
 
-rm -rf feeds/luci/themes/luci-theme-argon feeds/luci/themes/luci-app-argon-config
+#rm -rf feeds/luci/themes/luci-theme-argon feeds/luci/themes/luci-app-argon-config
 
-git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
-git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
+#git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
+#git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
 
 rm -f target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh.orig
 rm -f target/linux/mediatek/image/filogic.mk.orig
