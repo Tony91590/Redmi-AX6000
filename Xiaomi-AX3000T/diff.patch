@@ -54,6 +54,7 @@
 +endif
  endef
  TARGET_DEVICES += xiaomi_redmi-router-ax6000-ubootmod
+ 
 --- a/package/base-files/files/bin/config_generate
 +++ b/package/base-files/files/bin/config_generate
 @@ -331,7 +331,7 @@ generate_static_system() {
