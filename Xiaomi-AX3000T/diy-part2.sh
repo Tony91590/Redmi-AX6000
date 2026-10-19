@@ -20,3 +20,5 @@ sed -i 's/default-settings-chn/default-settings/g' include/target.mk
 grep -n '"FR"' package/mtk/applications/mtwifi-cfg-ucode/files/usr/share/schema/mtwifi/dat-defs.json
 PATCH_FILE="$GITHUB_WORKSPACE/Xiaomi-AX3000T/diff.patch"
 patch -p1 < "$PATCH_FILE"
+
+rm -f target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dtsi.orig
