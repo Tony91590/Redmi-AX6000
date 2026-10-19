@@ -108,15 +108,14 @@
 +		};
 +	};
  };
---- a/package/kernel/leds-ws2812b/src/leds-ws2812b.c
-+++ b/package/kernel/leds-ws2812b/src/leds-ws2812b.c
-@@ -175,7 +175,8 @@ static int ws2812b_probe(struct spi_device *spi)
+--- a/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dtsi
++++ b/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dtsi
+@@ -216,7 +216,7 @@
  
- 		for (i = 0; i < WS2812B_NUM_COLORS; i++) {
- 			priv->leds[cur_led].subled[i].color_index = color_idx[i];
--			priv->leds[cur_led].subled[i].intensity = color_intensity[i];
-+			priv->leds[cur_led].subled[i].intensity =
-+				(color_idx[i] == LED_COLOR_ID_GREEN) ? 255 : 0;
- 		}
- 
- 		priv->leds[cur_led].cascade = cascade;
+ 			color = <LED_COLOR_ID_RGB>;
+ 			color-index = <LED_COLOR_ID_RED LED_COLOR_ID_GREEN LED_COLOR_ID_BLUE>;
+-			color-intensity = <0 0 255>; /* BLUE */
++			color-intensity = <0 255 0>; /* GREEN */
+ 		};
+ 	};
+ };
