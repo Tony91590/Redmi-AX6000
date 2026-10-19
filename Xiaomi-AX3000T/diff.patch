@@ -8,53 +8,6 @@
  }
  .alert h4,
  .alert-message h4 {
---- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
-+++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
-@@ -72,7 +72,6 @@ platform_do_upgrade() {
-     tplink,tl-xdr6088|\
- 	tplink,wma301|\
- 	tplink,wma301-stock|\
--	xiaomi,redmi-router-ax6000-ubootmod|\
- 	xiaomi,mi-router-ax3000t-ubootmod|\
-     xiaomi,mi-router-wr30u-ubootmod|\
- 	h3c,magic-nx30-pro|\
-@@ -113,6 +112,7 @@ platform_do_upgrade() {
- 	tplink,tl-xtr8488|\
- 	tplink,wma301-ubootmod|\
- 	wirelesstag,zx7981pd-ubootmod|\
-+	xiaomi,mi-router-wr30u-ubootmod|\
- 	zyxel,ex5601-t0-ubootmod)
- 		fit_do_upgrade "$1"
- 		;;
---- a/target/linux/mediatek/image/filogic.mk
-+++ b/target/linux/mediatek/image/filogic.mk
-@@ -2541,12 +2541,24 @@ define Device/xiaomi_redmi-router-ax6000-ubootmod
-   DEVICE_DTS_DIR := ../dts
-   DEVICE_PACKAGES := kmod-leds-ws2812b kmod-mt7915e kmod-mt7986-firmware mt7986-wo-firmware
-   KERNEL_INITRAMFS_SUFFIX := -recovery.itb
-+  IMAGES := sysupgrade.itb
-   UBINIZE_OPTS := -E 5
-   BLOCKSIZE := 128k
-   PAGESIZE := 2048
--  ARTIFACTS := initramfs-factory.ubi
-+  KERNEL_IN_UBI := 1
-+  UBOOTENV_IN_UBI := 1
-+  KERNEL := kernel-bin | gzip
-+  KERNEL_INITRAMFS := kernel-bin | lzma | \
-+        fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k
-+  IMAGE/sysupgrade.itb := append-kernel | \
-+        fit gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb external-static-with-rootfs | append-metadata
-+  ARTIFACTS := preloader.bin bl31-uboot.fip
-+  ARTIFACT/preloader.bin := mt7986-bl2 spim-nand-ddr4
-+  ARTIFACT/bl31-uboot.fip := mt7986-bl31-uboot xiaomi_redmi-router-ax6000
-+ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
-+  ARTIFACTS += initramfs-factory.ubi
-   ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-recovery.itb | ubinize-kernel
--  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
-+endif
- endef
- TARGET_DEVICES += xiaomi_redmi-router-ax6000-ubootmod
- 
 --- a/package/base-files/files/bin/config_generate
 +++ b/package/base-files/files/bin/config_generate
 @@ -331,7 +331,7 @@ generate_static_system() {
@@ -66,48 +19,6 @@
  		set system.@system[-1].urandom_seed='0'
  
  		delete system.ntp
---- a/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000-ubootmod.dts
-+++ b/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000-ubootmod.dts
-@@ -8,28 +8,21 @@
- 	compatible = "xiaomi,redmi-router-ax6000-ubootmod", "mediatek,mt7986a";
- };
- 
--&spi_nand_flash {
--        mediatek,nmbm;
--        mediatek,bmt-max-ratio = <1>;
--        mediatek,bmt-max-reserved-blocks = <64>;
-+&chosen {
-+	rootdisk = <&ubi_rootdisk>;
-+	bootargs-append = " root=/dev/fit0 rootwait";
- };
- 
- &partitions {
- 	partition@580000 {
--                label = "crash";
--                reg = <0x580000 0x40000>;
--                read-only;
--        };
--
--        partition@5c0000 {
--                label = "crash_log";
--                reg = <0x5c0000 0x40000>;
--                read-only;
--        };
--
--	partition@600000 {
-+		compatible = "linux,ubi";
-+		reg = <0x580000 0x7a80000>;
- 		label = "ubi";
--		reg = <0x600000 0x6e00000>;
--	};
- 
-+		volumes {
-+			ubi_rootdisk: ubi-volume-fit {
-+				volname = "fit";
-+			};
-+		};
-+	};
- };
 --- a/package/kernel/leds-ws2812b/src/leds-ws2812b.c
 +++ b/package/kernel/leds-ws2812b/src/leds-ws2812b.c
 @@ -175,7 +175,8 @@ static int ws2812b_probe(struct spi_device *spi)
