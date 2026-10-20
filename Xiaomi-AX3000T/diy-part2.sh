@@ -24,3 +24,4 @@ rm -f package/base-files/files/bin/config_generate.orig
 rm -f target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000-ubootmod.dts.orig
 rm -f target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dtsi.orig
 rm -f feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css.orig
+rm -f package/kernel/leds-ws2812b/src/leds-ws2812b.c
