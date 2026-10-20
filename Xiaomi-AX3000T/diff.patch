@@ -1,3 +1,13 @@
+--- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
++++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
+@@ -72,7 +72,6 @@ platform_do_upgrade() {
+     tplink,tl-xdr6088|\
+ 	tplink,wma301|\
+ 	tplink,wma301-stock|\
+-	xiaomi,redmi-router-ax6000-ubootmod|\
+ 	xiaomi,mi-router-ax3000t-ubootmod|\
+     xiaomi,mi-router-wr30u-ubootmod|\
+ 	h3c,magic-nx30-pro|\
 --- a/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
 +++ b/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
 @@ -1380,6 +1380,7 @@ footer > a {
