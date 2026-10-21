@@ -1,3 +1,45 @@
+--- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
++++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
+@@ -72,7 +72,6 @@ platform_do_upgrade() {
+     tplink,tl-xdr6088|\
+ 	tplink,wma301|\
+ 	tplink,wma301-stock|\
+-	xiaomi,redmi-router-ax6000-ubootmod|\
+ 	xiaomi,mi-router-ax3000t-ubootmod|\
+     xiaomi,mi-router-wr30u-ubootmod|\
+ 	h3c,magic-nx30-pro|\
+--- a/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
++++ b/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
+@@ -1380,6 +1380,7 @@ footer > a {
+ .alert.error,
+ .alert-message.error {
+   background-color: var(--warning);
++  color: var(--yellow);
+ }
+ .alert h4,
+ .alert-message h4 {
+--- a/package/base-files/files/bin/config_generate
++++ b/package/base-files/files/bin/config_generate
+@@ -331,7 +331,7 @@ generate_static_system() {
+ 		set system.@system[-1].hostname='ImmortalWrt'
+ 		set system.@system[-1].timezone='UTC'
+ 		set system.@system[-1].ttylogin='0'
+-		set system.@system[-1].log_size='128'
++		set system.@system[-1].log_size='512'
+ 		set system.@system[-1].urandom_seed='0'
+ 
+ 		delete system.ntp
+--- a/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dtsi
++++ b/target/linux/mediatek/dts/mt7986a-xiaomi-redmi-router-ax6000.dtsi
+@@ -216,7 +216,7 @@
+ 
+ 			color = <LED_COLOR_ID_RGB>;
+ 			color-index = <LED_COLOR_ID_RED LED_COLOR_ID_GREEN LED_COLOR_ID_BLUE>;
+-			color-intensity = <0 0 255>; /* BLUE */
++			color-intensity = <0 255 0>; /* GREEN */
+ 		};
+ 	};
+ };
 --- a/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
 +++ b/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
 @@ -1380,6 +1380,7 @@ footer > a {
