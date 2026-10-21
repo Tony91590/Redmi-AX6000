@@ -1,3 +1,21 @@
+--- a/package/boot/uboot-envtools/files/mediatek_filogic
++++ b/package/boot/uboot-envtools/files/mediatek_filogic
+@@ -56,7 +56,6 @@ tplink,tl-xdr6086|\
+ tplink,tl-xdr6088|\
+ tplink,tl-xtr8488|\
+ xiaomi,mi-router-ax3000t-ubootmod|\
+-xiaomi,redmi-router-ax6000-ubootmod|\
+ zbtlink,zbt-z8103ax-c-ubootmod|\
+ zyxel,ex5601-t0-ubootmod)
+ 	ubootenv_add_ubi_default
+@@ -177,6 +176,7 @@ xiaomi,mi-router-ax3000t|\
+ xiaomi,mi-router-ax3000t-mtkuboot|\
+ xiaomi,mi-router-wr30u-stock|\
+ xiaomi,mi-router-wr30u-ubootmod|\
++xiaomi,redmi-router-ax6000-ubootmod|\
+ xiaomi,redmi-router-ax6000-stock)
+ 	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x10000" "0x20000"
+ 	ubootenv_add_uci_sys_config "/dev/mtd2" "0x0" "0x10000" "0x20000"
 --- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 +++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 @@ -72,7 +72,6 @@ platform_do_upgrade() {
