@@ -58,24 +58,3 @@
  		};
  	};
  };
---- a/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
-+++ b/feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
-@@ -1380,6 +1380,7 @@ footer > a {
- .alert.error,
- .alert-message.error {
-   background-color: var(--warning);
-+  color: var(--yellow);
- }
- .alert h4,
- .alert-message h4 {
---- a/package/base-files/files/bin/config_generate
-+++ b/package/base-files/files/bin/config_generate
-@@ -331,7 +331,7 @@ generate_static_system() {
- 		set system.@system[-1].hostname='ImmortalWrt'
- 		set system.@system[-1].timezone='UTC'
- 		set system.@system[-1].ttylogin='0'
--		set system.@system[-1].log_size='128'
-+		set system.@system[-1].log_size='512'
- 		set system.@system[-1].urandom_seed='0'
- 
- 		delete system.ntp
